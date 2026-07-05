@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚠️ WARNING: SYSTEM COMPROMISED</title>
+    <!-- Google Fonts for futuristic Arabic and Monospace English -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Courier+Prime:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- CRT screen overlay (scanlines, vignette, flickers) -->
+    <div class="crt-overlay"></div>
+    <div class="crt-scanlines"></div>
+
+    <!-- Background Matrix / Binary Canvas -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- 1. Interactive Audio Access & Start Overlay -->
+    <div id="start-overlay" class="overlay-panel">
+        <div class="terminal-box glow-red">
+            <div class="terminal-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span class="title-text">SYSTEM_BREACH_DETECTED</span>
+            </div>
+            <div class="terminal-content">
+                <div class="warning-icon">⚠️</div>
+                <h2>تم اكتشاف محاولة اتصال خارجي غير آمن</h2>
+                <p>اضغط على الزر أدناه لبدء عملية فحص الاتصال وتأمين النظام.</p>
+                <button id="start-btn" class="cyber-btn glow-pulse">
+                    <span>بدء تشغيل النظام والتحقق</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Loading Screen -->
+    <div id="loading-screen" class="overlay-panel hidden">
+        <div class="terminal-box glow-green">
+            <div class="terminal-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span class="title-text">DOWNLOADING_PAYLOAD.EXE</span>
+            </div>
+            <div class="terminal-content">
+                <div class="scanner-line"></div>
+                <div class="status-title">جاري فحص وتحديث ملفات النظام...</div>
+                
+                <!-- Fake Loading Bar -->
+                <div class="progress-container">
+                    <div class="progress-bar-wrapper">
+                        <div id="progress-bar" class="progress-bar"></div>
+                    </div>
+                    <div id="progress-text" class="progress-text">0%</div>
+                </div>
+
+                <!-- Live logs -->
+                <div class="logs-container" id="loading-logs">
+                    <!-- Logs will be appended here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Main Hacker Hacked Screen -->
+    <div id="hacked-screen" class="main-container hidden">
+        <!-- Floating Sound Control -->
+        <button id="sound-toggle" class="sound-btn" aria-label="Toggle Sound">
+            <svg id="sound-on-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.063.922-2.063 2.063v4.874c0 1.141.922 2.062 2.063 2.062h1.932l4.5 4.5c.944.945 2.56.276 2.56-1.06V4.06zM17.78 9.22a.75.75 0 10-1.06 1.06L18.44 12l-1.72 1.72a.75.75 0 001.06 1.06l1.72-1.72 1.72 1.72a.75.75 0 101.06-1.06L20.56 12l1.72-1.72a.75.75 0 00-1.06-1.06l-1.72 1.72-1.72-1.72z" />
+            </svg>
+            <svg id="sound-off-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.063.922-2.063 2.063v4.874c0 1.141.922 2.062 2.063 2.062h1.932l4.5 4.5c.944.945 2.56.276 2.56-1.06V4.06z" />
+                <path d="M18.53 8.97a.75.75 0 011.06 0 7.5 7.5 0 010 10.61.75.75 0 11-1.06-1.06 6 6 0 000-8.49.75.75 0 010-1.06z" />
+                <path d="M15.82 11.68a.75.75 0 011.06 0 3.5 3.5 0 010 4.95.75.75 0 11-1.06-1.06 2 2 0 000-2.83.75.75 0 010-1.06z" />
+            </svg>
+            <span id="sound-status-text">الصوت مفعل</span>
+        </button>
+
+        <!-- Main Danger Alert Window -->
+        <header class="hacked-header">
+            <div class="hacked-alert-box glow-red-intense">
+                <div class="glitch-wrapper">
+                    <h1 class="glitch-text" data-text="⚠️ تم تهكيرك يا معلم">⚠️ تم تهكيرك يا معلم</h1>
+                </div>
+                <div class="typing-container">
+                    <p id="hacked-subtext" class="hacked-subtext"></p>
+                </div>
+            </div>
+        </header>
+
+        <!-- System Fake Info Panel -->
+        <section class="info-section">
+            <div class="info-card glow-red">
+                <div class="card-header">بيانات الهدف (Target Information)</div>
+                <div class="card-body">
+                    <div class="info-row">
+                        <span class="label">عنوان البروتوكول (IP Address):</span>
+                        <span class="value accent-green code-font">192.168.1.100</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">شبكة الواي فاي (Wi-Fi Name):</span>
+                        <span class="value accent-red">غير متاح</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">الموقع الجغرافي (Location):</span>
+                        <span class="value accent-yellow code-font">Unknown</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Live Scanning Console (Terminal) -->
+        <main class="terminal-section">
+            <div class="terminal-box console-box glow-green">
+                <div class="terminal-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <span class="title-text">ROOT@ANTIGRAVITY:~# MONITORING_ACTIVE</span>
+                </div>
+                <div class="terminal-content console-content" id="console-output">
+                    <!-- Continual background scanner loops -->
+                </div>
+            </div>
+        </main>
+
+        <footer class="hacked-footer">
+            <p>DESIGNED BY ANONYMOUS // STATUS: <span class="blink-fast accent-red">ONLINE</span></p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
